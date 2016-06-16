@@ -54,6 +54,8 @@ Player = function() {
     this.sprite = "images/char-boy.png";
     this.lives = 3;
     this.score = 0;
+    this.countLives(3);
+    this.countScore(0);
 };
 
 // Confine player movement to the canvas
@@ -68,7 +70,7 @@ Player.prototype.update = function() {
         this.y = 800;
     } else if (this.y <= 0) {
         this.score++;
-        countScore(this.score);
+        this.countScore(this.score);
         if(this.score === 3){
             return;
         }
@@ -93,7 +95,7 @@ Player.prototype.collisionWatch = function() {
     for(var i = 0; i < allEnemies.length; i++) {
         if( (this.x - allEnemies[i].x < 30 && this.x - allEnemies[i].x > -30) && this.y === allEnemies[i].y) {
             this.lives--;
-            countLives(this.lives);
+            this.countLives(this.lives);
 
             if(this.lives === 0) {
                 return;
@@ -105,7 +107,7 @@ Player.prototype.collisionWatch = function() {
 };
 
 // Tracks and prints player life points
-countLives = function(life) {
+Player.prototype.countLives = function(life) {
     this.lives = life;
 
     if (this.lives === 0) {
@@ -119,10 +121,9 @@ countLives = function(life) {
     lives = lives.innerHTML = "Lives: " + this.lives;
 
 };
-countLives(3);
 
 // Tracks and prints player score
-countScore = function(score) {
+Player.prototype.countScore = function(score) {
     this.score = score;
 
     if (this.score === 3){
@@ -135,7 +136,6 @@ countScore = function(score) {
     var newScore = document.getElementById("score");
     newScore = newScore.innerHTML = "Score: " + this.score;
 };
-countScore(0);
 
 // Player controls
 Player.prototype.handleInput = function(key){
