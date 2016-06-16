@@ -1,39 +1,233 @@
-// Enemies our player must avoid
-var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+/* *************************************************************
+********                                                ********
+********           Classic Arcade Game Clone            ********
+********                        By: Eric Phy            ********
+********                                                ********
+************************************************************* */
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+
+// Game state variables
+var playing = true;
+var victory = false;
+var defeat = false;
+
+// Enemy constructor
+var Enemy = function(x, y, speed, startX) {
+
+    this.x = x;
+    this.y = y;
+    this.startX = startX;
+    this.speed = speed;
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
+
+// Update the enemy's position
 // Parameter: dt, a time delta between ticks
+
+// You should multiply any movement by the dt parameter
+// which will ensure the game runs at the same speed for
+// all computers.
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+    if(playing === false){
+        return;
+    }
+    this.x = this.x + this.speed * dt;
+
+    if(this.x >= 1000){
+        this.x = assignX();
+        this.speed = findSpeed();
+    }
 };
 
-// Draw the enemy on the screen, required method for game
+// Draw the enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// Human character constructor
+Player = function() {
+    this.startX = 500;
+    this.startY = 800;
+    this.x = 500;
+    this.y = 800;
+    this.sprite = "images/char-boy.png";
+    this.lives = 3;
+    this.score = 0;
+};
+
+// Confine player movement to the canvas
+Player.prototype.update = function() {
+    if(playing === false){
+        return;
+    }
+
+    if (this.x < 0) {
+        this.x = 0;
+    } else if (this.y > 800) {
+        this.y = 800;
+    } else if (this.y <= 0) {
+        this.score++;
+        countScore(this.score);
+        if(this.score === 3){
+            return;
+        }
+
+        this.y = 800;
+    } else if (this.x < -500) {
+        this.x = -500;
+    } else if (this.x > 900) {
+        this.x = 900;
+    }
+    // Check for collisions each tick
+    this.collisionWatch();
+};
+
+// Render player each tick
+Player.prototype.render = function(){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// Collision detection
+Player.prototype.collisionWatch = function() {
+    for(var i = 0; i < allEnemies.length; i++) {
+        if( (this.x - allEnemies[i].x < 30 && this.x - allEnemies[i].x > -30) && this.y === allEnemies[i].y) {
+            this.lives--;
+            countLives(this.lives);
+
+            if(this.lives === 0) {
+                return;
+            }
+            this.x = 500;
+            this.y = 800;
+        }
+    }
+};
+
+// Tracks and prints player life points
+countLives = function(life) {
+    this.lives = life;
+
+    if (this.lives === 0) {
+        defeat = true;
+        playing = false;
+        defeatTime();
+    }
+
+    console.log(this.lives);
+    var lives = document.getElementById("lives");
+    lives = lives.innerHTML = "Lives: " + this.lives;
+
+};
+countLives(3);
+
+// Tracks and prints player score
+countScore = function(score) {
+    this.score = score;
+
+    if (this.score === 3){
+        victory = true;
+        playing = false;
+        victoryTime();
+    }
+
+    console.log(this.score);
+    var newScore = document.getElementById("score");
+    newScore = newScore.innerHTML = "Score: " + this.score;
+};
+countScore(0);
+
+// Player controls
+Player.prototype.handleInput = function(key){
+    if (playing === false){
+        return;
+    }
+    switch (key) {
+        case "left":
+            this.x = this.x - 100;
+            break;
+        case "right":
+            this.x = this.x + 100;
+            break;
+        case "up":
+            this.y = this.y - 83;
+            break;
+        case "down":
+            this.y = this.y + 83;
+            break;
+    }
+};
+
+// Instantiate player object
+var player = new Player();
+
+// Instantiate enemy array
+var allEnemies = [];
 
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+// Find initial x value for enemies
+var assignX = function(){
+    var pickX = [];
+    for(var a = 0; a < 9; a++){
+        // Assign starting X position for enemies off the canvas
+        pickX[a] = 100 + a * 75;
+    }
+    // Selects a random array index to return
+    var pickRealX = pickX[Math.floor(Math.random() * pickX.length)];
+    var pickRealNegX = pickRealX * -1;
+    return pickRealNegX;
+};
+
+// Find initial speed value for enemies
+var findSpeed = function(){
+    var speed = 225 + Math.floor(Math.random() * 425);
+    return speed;
+};
+
+// Create enemies
+var createEnemies = function(){
+    for(var a = 0; a < 7; a++){
+        allEnemies.push(new Enemy(assignX(), 53, findSpeed(), assignX()));
+    }
+    for(var a1 = 0; a1 < 7; a1++){
+        allEnemies.push(new Enemy(assignX(), 53 + 83, findSpeed(), assignX()));
+    }
+    for(var a2 = 0; a2 < 5; a2++){
+        allEnemies.push(new Enemy(assignX(), 53 + 83*2, findSpeed(), assignX()));
+    }
+    for(var a3 = 0; a3 < 5; a3++){
+        allEnemies.push(new Enemy(assignX(), 53 + 83*3, findSpeed(), assignX()));
+    }
+        // new set of four rows
+    for(var b = 0; b < 4; b++){
+        allEnemies.push(new Enemy(assignX(), 53 + 83*5, findSpeed(), assignX()));
+    }
+    for(var b1 = 0; b1 < 4; b1++){
+        allEnemies.push(new Enemy(assignX(), 53 + 83*6, findSpeed(), assignX()));
+    }
+    for(var b2 = 0; b2 < 4; b2++){
+        allEnemies.push(new Enemy(assignX(), 53 + 83*7, findSpeed(), assignX()));
+    }
+    for(var b3 = 0; b3 < 3; b3++){
+        allEnemies.push(new Enemy(assignX(), 53 + 83*8, findSpeed(), assignX()));
+    }
+};
+createEnemies();
 
 
+// Win and lose functions
+var victoryTime = function(){
+    var win = document.getElementById("description");
+    win.innerHTML = "You are the champion!!! </br></br> Refresh the page to play again!";
+};
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+var defeatTime = function(){
+    var lose = document.getElementById("description");
+    lose.innerHTML = "You have been defeated!!! </br></br> Refresh the page to try again!";
+};
+
+// This listens for key presses and sends the keys to the
+// Player.handleInput() method.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',

@@ -4,6 +4,9 @@
  * a simple "caching" layer so it will reuse cached images if you attempt
  * to load the same image multiple times.
  */
+
+console.log("resources.js begin");
+
 (function() {
     var resourceCache = {};
     var loading = [];
@@ -109,3 +112,5 @@
         isReady: isReady
     };
 })();
+
+console.log("resources.js finished");

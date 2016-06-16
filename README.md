@@ -1,6 +1,14 @@
-frontend-nanodegree-arcade-game
-===============================
-
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission.
-
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+# **Classic Arcade Game Clone**
+### Frontend Nanodegree Project 3
+___
+#### Objectives:
+- Move your character into the water 3 times before you lose your life points.
+- Avoid hitting bugs.
+  - Each bug you hits costs you one of your 3 life points.
+- Have fun!
+___
+#### Controls:
+- Tap your keyboard arrow keys to move up, down, left, and right.
+- Refresh the webpage after winning/losing to play again.
+___
+Created By: Eric Phy

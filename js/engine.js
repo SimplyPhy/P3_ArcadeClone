@@ -14,6 +14,8 @@
  * a little simpler to work with.
  */
 
+ console.log("engine.js begin");
+
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -25,8 +27,8 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 1010;
+    canvas.height = 1111;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -80,7 +82,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        //checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -109,14 +111,23 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+
+                'images/stone-block.png',   // Row 4 of 4 of stone
+                'images/stone-block.png',   // Row 3 of 4 of stone
+                'images/stone-block.png',   // Row 2 of 4 of stone
+                'images/stone-block.png',   // Row 4 of 4 of stone
+
+                'images/grass-block.png',   // Row 2 of 2 of grass
+
+                'images/stone-block.png',   // Row 4 of 4 of stone
+                'images/stone-block.png',   // Row 3 of 4 of stone
+                'images/stone-block.png',   // Row 2 of 4 of stone
+                'images/stone-block.png',   // Row 1 of 4 of stone
+
+                'images/grass-block.png'    // Row 1 of 2 of grass
             ],
-            numRows = 6,
-            numCols = 5,
+            numRows = 11,
+            numCols = 10,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -173,6 +184,8 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/char-boy.png'
     ]);
+
+
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window
@@ -181,3 +194,5 @@ var Engine = (function(global) {
      */
     global.ctx = ctx;
 })(this);
+
+ console.log("engine.js finished");

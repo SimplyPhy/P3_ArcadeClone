@@ -1,3 +1,10 @@
 body {
     text-align: center;
+    zoom: .7;
+}
+h2 {
+	font-size: 3em;
+	font-family: helvetica;
+	text-align: center;
+	text-indent: 30%;
 }
