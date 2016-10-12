@@ -31,6 +31,3 @@ project.
 This project took approximately 12 hours to complete.  The most challenging parts were
 demystifying the game engine, learning how to accept and manage user input, and configuring
 the collision function.
-
-___
-Created By: Eric Phy
