@@ -2,7 +2,8 @@
 ### Frontend Nanodegree Project 3
 ___
 #### Getting Started:
-Clone the repository, and load index.html in your browser.  The game will start from there!
+~~Clone the repository, and load index.html in your browser.  The game will start from there!~~  
+**Update**: The game is hosted [here](https://simplyphy.github.io/P3_ArcadeClone/)!
 
 ___
 #### Objectives:
