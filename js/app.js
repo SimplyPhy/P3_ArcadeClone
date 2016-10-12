@@ -25,9 +25,7 @@ var Enemy = function(x, y, speed, startX) {
 // Update the enemy's position
 // Parameter: dt, a time delta between ticks
 
-// You should multiply any movement by the dt parameter
-// which will ensure the game runs at the same speed for
-// all computers.
+// Multiply any movement by the dt parameter for FPS independence
 Enemy.prototype.update = function(dt) {
     if(playing === false){
         return;
@@ -217,13 +215,13 @@ createEnemies();
 
 // Win and lose functions
 var victoryTime = function(){
-    var win = document.getElementById("description");
-    win.innerHTML = "You are the champion!!! </br></br> Refresh the page to play again!";
+    var win = document.getElementById("objective");
+    win.innerHTML = "You are the champion!!! </br> Refresh the page to play again!";
 };
 
 var defeatTime = function(){
-    var lose = document.getElementById("description");
-    lose.innerHTML = "You have been defeated!!! </br></br> Refresh the page to try again!";
+    var lose = document.getElementById("objective");
+    lose.innerHTML = "You have been defeated!!! </br> Refresh the page to try again!";
 };
 
 // This listens for key presses and sends the keys to the

@@ -1,10 +1,24 @@
 body {
+    zoom: .6;
     text-align: center;
-    zoom: .7;
+    background: hsl(180, 75%, 90%);
 }
-h2 {
-	font-size: 3em;
+
+h3 {
+    display: inline-block;
 	font-family: helvetica;
-	text-align: center;
-	text-indent: 30%;
+    font-size: 2rem;
+    width: 30%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.score-header {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 80%;
+    margin: auto;
+    background: hsl(180, 75%, 70%);
 }
